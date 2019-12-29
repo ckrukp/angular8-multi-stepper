@@ -1,0 +1,721 @@
+<div mat-dialog-title *ngIf="!isSignUpForm">
+  <div class="part-1">
+    <img class="responsive-none" src="assets/img/dialog-logo.png" alt="">
+    <div class="close-btn" (click)="onNoClick()">
+      <mat-icon>clear</mat-icon>
+    </div>
+  </div>
+  <div class="part-2">
+    <mat-progress-bar mode="determinate" [value]="currentStepRate"></mat-progress-bar>
+  </div>
+
+</div>
+
+<div *ngIf="isSignUpForm" class="signup-title">
+  <div class="close-btn" (click)="onNoClick()">
+    <mat-icon>clear</mat-icon>
+  </div>
+</div>
+
+<div mat-dialog-content>
+  <mat-horizontal-stepper #stepper (selectionChange)="selectionChange($event)">
+
+    <mat-step [stepControl]="signUpFormGroup">
+      <form [formGroup]="signUpFormGroup" class="sign-up-form">
+        <div class="form-header">
+          Get started with <span>CookHub</span>
+          <div class="description">
+            Create your free account to kickstart your culinary business
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="form-section social-login-wrapper">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <a class="btn btn-block btn-social btn-facebook" href="#">
+                  <span class="fa fa-facebook"></span> Sign in with Facebook
+                </a>
+              </div>
+              <div class="col-12 col-md-6">
+                <a class="btn btn-block btn-social btn-google" href="#">
+                  <span class="fa fa-google"></span> Sign in with Google
+                </a>
+              </div>
+            </div>
+
+            <div class="vl">
+              <span class="vl-innertext">or</span>
+            </div>
+          </div>
+
+          <div class="form-section user-info-wrapper">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <input type="text" placeholder="Email address" required class="form-control input-box">
+              </div>
+              <div class="col-12 col-md-6">
+                <input type="text" placeholder="Phone number" required class="form-control input-box">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section responsive-none">
+            <div class="row">
+              <div class="col">
+                <mat-checkbox color="primary" class="item-checkbox">Enable text messages (recommended)</mat-checkbox>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="item-description">
+                  By checking the box, you agree to receive updates from CookHub regarding client orders, upcoming
+                  reservations, and new opportunities to grow.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section pwd-wrapper">
+            <div class="row">
+              <div class="col">
+                <label for="" class="item-label responsive-none">Create a unique password to protect your
+                  account</label>
+                <input type="text" placeholder="Create a password" required class="form-control input-box">
+                <span class="hint">Must be at least 6 characters</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup" class="firstForm">
+        <div class="form-header">
+          What brought you to <span>CookHub?</span> (optional)
+          <div class="description">
+            We are curious to see what features caught your eye and made you want to sign up.
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="row check-row">
+            <div class="col-12 col-md-6">
+              <mat-checkbox color="primary">Text message ordering</mat-checkbox>
+            </div>
+            <div class="col-12 col-md-6">
+              <mat-checkbox color="primary">Marketing & loyalty tools</mat-checkbox>
+            </div>
+          </div>
+          <div class="row check-row">
+            <div class="col-12 col-md-6">
+              <mat-checkbox color="primary">Client invoicing</mat-checkbox>
+            </div>
+            <div class="col-12 col-md-6">
+              <mat-checkbox color="primary">Online payment processing</mat-checkbox>
+            </div>
+          </div>
+          <div class="row check-row">
+            <div class="col-12 col-md-6">
+              <mat-checkbox color="primary">Digital tax services</mat-checkbox>
+            </div>
+            <div class="col-12 col-md-6">
+              <mat-checkbox color="primary">Automatic chef/client reminders</mat-checkbox>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup" class="secondForm">
+        <div class="form-header">
+          Tell us about <span>yourself</span>
+          <div class="description">
+            Let us get to know you a bit better so we can personalize your experience.
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-section">
+                <div class="row">
+                  <div class="col-12 col-md-12">
+                    <label for="" class="item-label">Legal name</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <input type="text" placeholder="First name" required class="form-control input-box">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <input type="text" placeholder="Last name" required class="form-control input-box">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section responsive-none">
+                <div class="row">
+                  <div class="col-12 col-md-12">
+                    <label for="" class="item-label">Date of birth</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <select class="form-control select-box">
+                      <option selected disabled>Month</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control select-box">
+                      <option selected disabled>Day</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4">
+                    <select class="form-control select-box">
+                      <option selected disabled>Year</option>
+                      <option>2016</option>
+                      <option>2017</option>
+                      <option>2018</option>
+                      <option>2019</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section responsive-show">
+                <div class="row">
+                  <div class="col-12 col-md-12">
+                    <label for="" class="item-label">Date of birth</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <!-- <select class="form-control select-box">
+                      <option selected disabled>Month</option>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                    </select> -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="row">
+                  <div class="col-12 col-md-12">
+                    <label for="" class="item-label">Home Address</label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <input type="text" placeholder="Street address" required class="form-control input-box">
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <input type="text" placeholder="Suite or apt. #" required class="form-control input-box">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup" class="thirdForm">
+        <div class="form-header">
+          Tell us about <span>your business</span>
+        </div>
+        <div class="form-content">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-section">
+                <div class="row">
+                  <div class="col">
+                    <label for="" class="item-label responsive-none">Business name</label>
+                    <input type="text" placeholder="e.g. Kristen's Meal Prep" required class="form-control input-box">
+                    <span class="hint">If you do not have a business name, just use your name.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="row">
+                  <div class="col">
+                    <label for="" class="item-label responsive-none">Year founded</label>
+                    <select class="form-control select-box">
+                      <option selected disabled>Year</option>
+                      <option>2016</option>
+                      <option>2017</option>
+                      <option>2018</option>
+                      <option>2019</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="row">
+                  <div class="col">
+                    <label for="" class="item-label responsive-none">Number of employees</label>
+                    <input type="text" placeholder="e.g. 2" required class="form-control input-box">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="row">
+                  <div class="col">
+                    <label for="" class="item-label responsive-none">Social media (optional)</label>
+                    <div class="input-group">
+                      <span class="input-group-addon">
+                        <i class="fa fa-instagram"></i>
+                      </span>
+                      <input type="text" placeholder="e.g. 2" required class="form-control input-box">
+                      <span class="hint">Linking your Instagram account with CookHub will add your pictures to your
+                        CookHub profile so clients can see the work you have done.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <div class="row">
+                  <div class="col">
+                    <label for="" class="item-label responsive-none">Business address (optional)</label>
+                    <div class="input-group">
+                      <input type="text" placeholder="Street address" required class="form-control input-box">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col">
+                    <input type="text" placeholder="Suite or apt. #" required
+                      class="form-control input-box space-between">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="firthFormGroup">
+      <form [formGroup]="firthFormGroup" class="firthForm">
+        <div class="form-header">
+          Which cuisines are your <span>specialty?</span>
+          <div class="description">
+            Select all cuisines you will be able to provide to your clients.
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="row">
+            <div class="col col-md-6">
+              <div class="row check-row">
+                <div class="col-12 col-md-6">
+                  <mat-checkbox color="primary">American</mat-checkbox>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-checkbox color="primary">Italian</mat-checkbox>
+                </div>
+              </div>
+              <div class="row check-row">
+                <div class="col-12 col-md-6">
+                  <mat-checkbox color="primary">Southern</mat-checkbox>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-checkbox color="primary">Mecican/Latin American</mat-checkbox>
+                </div>
+              </div>
+              <div class="row check-row">
+                <div class="col-12 col-md-6">
+                  <mat-checkbox color="primary">Mediterranean</mat-checkbox>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-checkbox color="primary">Middle Eastern</mat-checkbox>
+                </div>
+              </div>
+              <div class="row check-row">
+                <div class="col-12 col-md-6">
+                  <mat-checkbox color="primary">Asian</mat-checkbox>
+                </div>
+                <div class="col-12 col-md-6">
+                  <mat-checkbox color="primary">French</mat-checkbox>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 responsive-none">
+              <div class="tip-wrapper">
+                <div class="tip-title">
+                  Want to make changes?
+                </div>
+
+                <div class="tip-desc">
+                  You can change your cuisines at any time right from your chef profile on the CookHub mobile app.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="fifthFormGroup">
+      <form [formGroup]="fifthFormGroup" class="fifthForm">
+        <div class="form-header">
+          Invite your <span>clients</span>
+          <div class="description">
+            CookHub will never charge you for connecting to clients, new or old.
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="card">
+            <div class="card-body">
+              <div class="form-section">
+                <div class="row">
+                  <div class="col">
+                    <label for="" class="item-label">Send your clients an invite</label>
+                    <div class="email-list" *ngFor="let client of clientList">
+                      <input type="text" placeholder="Email" required class="form-control input-box">
+                    </div>
+                  </div>
+                </div>
+
+                <a href="#" class="add-client" (click)="addClient()"><i class="fa fa-plus-square-o"
+                    aria-hidden="true"></i>Add new client</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="fourteenFormGroup">
+      <form [formGroup]="fourteenFormGroup" class="fourteenForm">
+        <div class="form-header">
+          Link your <span>social media. </span>(optional)
+        </div>
+        <div class="form-content">
+          <div class="form-section">
+            <div class="row">
+              <div class="col">
+                <div class="input-group">
+                  <span class="input-group-addon">
+                    <i class="fa fa-instagram"></i>
+                  </span>
+                  <input type="text" placeholder="Connect to Instagram" required class="form-control input-box">
+                </div>
+                <span class="hint">Linking your Instagram account with CookHub will make your pictures visible to clients on your CookHub profile.</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col image-wrapper">
+                <img src="assets/img/instagram.png" alt="">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="sixthFormGroup">
+      <form [formGroup]="sixthFormGroup" class="sixthForm">
+        <div class="form-header">
+          Why should a new client hire <span>you?</span>
+          <div class="description">
+            Tell prospective clients about what makes you special as a chef
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="row">
+            <div class="col-12 col-md-7">
+              <div class="left-card">
+                <textarea rows="10"></textarea>
+                <div class="card-hint">
+                  Minimum 0/90 characters
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-5 card-border">
+              <div class="right-card">
+                <div class="tip-title">Tips for your introduction</div>
+                <ul>
+                  <li>Talk about years of experience as a chef</li>
+                  <li>Talk about education and any certifications you may have have earned.</li>
+                  <li>Be yourself! Clients care about their food just as much as they care about the chef who is.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="seventhFormGroup">
+      <form [formGroup]="seventhFormGroup" class="seventhForm">
+        <div class="form-header">
+          Do you have your <span>food handlers certification?</span>
+        </div>
+        <div class="form-content">
+          <div class="check-group">
+            <div class="row check-row">
+              <div class="col-12 col-md-12">
+                <mat-checkbox color="primary">Yes</mat-checkbox>
+              </div>
+            </div>
+            <div class="row check-row">
+              <div class="col-12 col-md-12">
+                <mat-checkbox color="primary">No</mat-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="row">
+              <div class="col">
+                <label for="" class="item-label">Do you have any other certifications</label>
+                <div class="cert-list" *ngFor="let cert of certificationList">
+                  <input type="text" placeholder="Certification" required class="form-control input-box">
+                </div>
+              </div>
+            </div>
+
+            <a href="#" class="add-cert" (click)="addCert()"><i class="fa fa-plus-square-o" aria-hidden="true"></i>Add
+              new certification</a>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="eighthFormGroup">
+      <form [formGroup]="eighthFormGroup" class="eighthForm">
+        <div class="form-header">
+          Did you get any formal <span>culinary education?</span>
+        </div>
+        <div class="form-content">
+          <div class="check-group">
+            <div class="row check-row">
+              <div class="col-12 col-md-12">
+                <mat-checkbox color="primary">Yes</mat-checkbox>
+              </div>
+            </div>
+            <div class="row check-row">
+              <div class="col-12 col-md-12">
+                <mat-checkbox color="primary">No</mat-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="row">
+              <div class="col">
+                <label for="" class="item-label">Where did you study</label>
+                <div class="cert-list" *ngFor="let cert of collegeList">
+                  <input type="text" placeholder="College" required class="form-control input-box">
+                </div>
+              </div>
+            </div>
+
+            <a href="#" class="add-cert" (click)="addCollege()"><i class="fa fa-plus-square-o"
+                aria-hidden="true"></i>Add new education</a>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="ninethFormGroup">
+      <form [formGroup]="ninethFormGroup" class="ninethForm">
+        <div class="form-header">
+          Which services do you <span>provide?</span>
+          <div class="description">
+            Select all cuisines you will be able to provide to your clients.
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="row">
+            <div class="col col-md-6">
+              <div class="row check-row">
+                <div class="col-12">
+                  <mat-checkbox color="primary">Weekly meal prep</mat-checkbox>
+                </div>
+              </div>
+              <div class="row check-row">
+                <div class="col-12">
+                  <mat-checkbox color="primary">Personal Chef(Travel to their hous)</mat-checkbox>
+                </div>
+              </div>
+              <div class="row check-row">
+                <div class="col-12">
+                  <mat-checkbox color="primary">Event Catering (10 ~ 20+ guests)</mat-checkbox>
+                </div>
+              </div>
+              <div class="row check-row">
+                <div class="col-12">
+                  <mat-checkbox color="primary">Homecooked meal (Delivery)</mat-checkbox>
+                </div>
+              </div>
+              <div class="row check-row">
+                <div class="col-12">
+                  <mat-checkbox color="primary">Homecooked meal (prepared onsite)</mat-checkbox>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 responsive-none">
+              <div class="tip-wrapper">
+                <div class="tip-title">
+                  Want to make changes?
+                </div>
+
+                <div class="tip-desc">
+                  You can change your cuisines at any time right from your chef profile on the CookHub mobile app.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="tenthFormGroup">
+      <form [formGroup]="tenthFormGroup" class="tenthForm">
+        <div class="form-header">
+          Add your <span>profile picture</span>
+          <div class="description">
+            Let's see that smile! Your picture is often the first impression you will make with new clients.
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="row">
+            <div class="col-12 col-md-7">
+              <div class="left-card upload-pic">
+                <div class="upload-pic-wrapper">
+                  <i class="fa fa-camera" aria-hidden="true"></i>
+                  <p>Click to upload your picture</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-5 card-border">
+              <div class="right-card">
+                <div class="tip-title">Tips for the perfect photo</div>
+                <ul>
+                  <li>Smile!</li>
+                  <li>Make sure the room is well-lit and your face is the subject of the photo.</li>
+                  <li>No messy backgrounds! Solid color backgrounds tend to be the most effective.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="elevenFormGroup">
+      <form [formGroup]="elevenFormGroup" class="elevenForm">
+        <div class="form-header">
+          When would you like to <span>work?</span>
+
+          <div class="description">
+            Tab on the days you would not like to work.
+          </div>
+        </div>
+
+        <div class="form-content">
+          <mat-radio-group aria-labelledby="example-radio-group-label" class="third-radio-group" formControlName="job_kind">
+            <mat-radio-button class="third-radio-button" (change)="changeJobKind($event)" color="primary" value="part">
+              Part time
+            </mat-radio-button>
+            <mat-radio-button class="third-radio-button" (change)="changeJobKind($event)" color="primary" value="full">
+              Full time
+            </mat-radio-button>
+          </mat-radio-group>
+          <ngb-multi-date-picker [datesSelected]="datesSelected" (datesSelectedChange)="change($event)"></ngb-multi-date-picker>
+        </div>
+        <div class="error-msg" *ngIf="notPickDate">
+          Please give an answer
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="twelveFormGroup">
+      <form [formGroup]="twelveFormGroup" class="twelveForm">
+        <div class="form-header">
+          CookHub will <span>never</span> charge you for new leads
+
+          <div class="description">
+            Connecting with new clients shouldn't be a hassle. Double your business with half the cost.
+          </div>
+        </div>
+        <div class="form-content">
+          <div class="image-wrapper">
+            <img src="assets/img/charge.png" alt="">
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="thirteenFormGroup">
+      <div class="row thirteenForm">
+        <div class="col-12 col-md-6">
+          <form [formGroup]="thirteenFormGroup">
+            <div class="form-header">
+              Enable online <span>payments</span>
+
+              <div class="description">
+                We partner with Stripe to ensure that every transaction made through CookHub is safe and secure.
+              </div>
+            </div>
+            <div class="form-content">
+              <button mat-button class="enable-pay">Enable payments</button>
+              <p class="pay-attension">You will not be able to generate revenue until you enable payments.</p>
+            </div>
+          </form>
+        </div>
+        <div class="col-12 col-md-6">
+          <div class="image-wrapper">
+            <img src="assets/img/pay.png" alt="">
+          </div>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <div class="form-header text-center">
+        Welcome to <span>CookHub</span>
+        <div class="description">
+          You are now part of the worlds first community marketplace. Your business is now in your hands.
+        </div>
+      </div>
+      <div class="form-content text-center finishedPanel">
+        <img src="assets/img/finished.png" alt="">
+        <p>Success!</p>
+        <button mat-button>Download the CookHub app</button>
+      </div>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+</div>
+<div mat-dialog-actions *ngIf="!isSignUpForm">
+  <button mat-stroked-button (click)="goBack(stepper)" class="backBtn">Back</button>
+  <button mat-button (click)="goForward(stepper)" *ngIf="!lastStep" class="nextBtn">Next</button>
+  <button mat-button (click)="stepper.reset()" *ngIf="lastStep" class="nextBtn">Finish</button>
+</div>
+
+<div *ngIf="isSignUpForm" class="sign-up-wrapper">
+  <button mat-button (click)="register(stepper)" class="nextBtn">Sign Up</button>
+  <p>By clicking Sign Up, you agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></p>
+</div>

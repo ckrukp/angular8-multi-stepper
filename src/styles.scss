@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+
+// @font-face {
+//     font-family: Avenir;
+//     src: url(assets/font/Avenir.otf) format("opentype");
+// }
+// @font-face {
+//     font-family: Mark;
+//     src: url(assets/font/Mark.otf) format("opentype");
+// }
+
+@media screen and (max-width: 900px) {
+    .cdk-overlay-pane {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: none !important;
+    }
+} 
+
+
+// * {
+//     font-family: Mark,Avenir,Helvetica,Arial,sans-serif;
+// }

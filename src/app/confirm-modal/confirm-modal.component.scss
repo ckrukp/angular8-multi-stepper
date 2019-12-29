@@ -1,0 +1,22 @@
+.confirm-modal {
+    padding-left: 24px !important;
+
+    h2 {
+        text-align: center;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .mat-raised-button {
+        width: 100%;
+        margin-bottom: 15px;
+        height: 45px;
+        border-radius: 0;
+        background-color: #6babe8;
+
+        &.cancel-btn {
+            color: #6babe8;
+            background-color: white;
+        }
+    }
+}

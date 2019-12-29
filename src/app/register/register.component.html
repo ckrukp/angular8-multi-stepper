@@ -1,0 +1,72 @@
+<form [formGroup]="signUpFormGroup" class="sign-up-form">
+    <div class="form-header">
+        Get started with <span>CookHub</span>
+        <div class="description">
+            Create your free account to kickstart your culinary business
+        </div>
+    </div>
+    <div class="form-content">
+        <div class="form-section social-login-wrapper">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <a class="btn btn-block btn-social btn-facebook" href="#">
+                        <span class="fa fa-facebook"></span> Sign in with Facebook
+                    </a>
+                </div>
+                <div class="col-12 col-md-6">
+                    <a class="btn btn-block btn-social btn-google" href="#">
+                        <span class="fa fa-google"></span> Sign in with Google
+                    </a>
+                </div>
+            </div>
+
+            <div class="vl">
+                <span class="vl-innertext">or</span>
+            </div>
+        </div>
+
+        <div class="form-section user-info-wrapper">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <input type="text" placeholder="Email address" required class="form-control input-box">
+                </div>
+                <div class="col-12 col-md-6">
+                    <input type="text" placeholder="Phone number" required class="form-control input-box">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section responsive-none">
+            <div class="row">
+                <div class="col">
+                    <mat-checkbox color="primary" class="item-checkbox">Enable text messages (recommended)
+                    </mat-checkbox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="item-description">
+                        By checking the box, you agree to receive updates from CookHub regarding client orders, upcoming
+                        reservations, and new opportunities to grow.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section pwd-wrapper">
+            <div class="row">
+                <div class="col">
+                    <label for="" class="item-label responsive-none">Create a unique password to protect your
+                        account</label>
+                    <input type="text" placeholder="Create a password" required class="form-control input-box">
+                    <span class="hint">Must be at least 6 characters</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="sign-up-wrapper">
+    <button mat-button class="nextBtn"(click)="gotoProgressPage()">Sign Up</button>
+    <p>By clicking Sign Up, you agree to the <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a></p>
+</div>
