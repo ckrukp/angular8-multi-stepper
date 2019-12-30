@@ -1,8 +1,5 @@
 <section class="progress-wrapper container-fluid">
     <div class="header-part" *ngIf="!isSignUpForm">
-        <div class="part-1">
-            <img class="responsive-none" src="assets/img/dialog-logo.png" alt="">
-        </div>
         <div class="part-2">
             <mat-progress-bar mode="determinate" [value]="currentStepRate"></mat-progress-bar>
         </div>
@@ -645,17 +642,10 @@
                     </div>
 
                     <div class="form-content">
-                        <mat-radio-group aria-labelledby="example-radio-group-label" class="third-radio-group"
-                            formControlName="job_kind">
-                            <mat-radio-button class="third-radio-button" (change)="changeJobKind($event)"
-                                color="primary" value="part">
-                                Part time
-                            </mat-radio-button>
-                            <mat-radio-button class="third-radio-button" (change)="changeJobKind($event)"
-                                color="primary" value="full">
-                                Full time
-                            </mat-radio-button>
-                        </mat-radio-group>
+                        <div class="btn-wrapper">
+                            <button mat-stroked-button (click)="selectAll()" class="backBtn">Select All</button>
+                            <button mat-button (click)="deselect()" class="nextBtn">Deselect</button>
+                        </div>
                         <ngb-multi-date-picker [datesSelected]="datesSelected" (datesSelectedChange)="change($event)">
                         </ngb-multi-date-picker>
                     </div>

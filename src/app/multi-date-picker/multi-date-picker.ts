@@ -52,7 +52,7 @@ export class MultiDatePicker {
     fromDate: NgbDateStruct;
     toDate: NgbDateStruct;
 
-    displayNum = 2;
+    displayNum = 1;
 
     _datesSelected: NgbDateStruct[] = [];
 
@@ -70,29 +70,18 @@ export class MultiDatePicker {
 
         const current = new Date();
         this.minDate = { year: current.getFullYear(), month: current.getMonth() + 1, day: current.getDate() };
-        this.maxDate = { year: current.getFullYear(), month: current.getMonth() + 3, day: current.getDate() }
-    }
-
-    ngOnInit() {
-        let that = this;
-
-        window.addEventListener("resize", function() {
-            if (window.innerWidth <= 760)
-                that.displayNum = 1;
-            else
-                that.displayNum = 2;
-        });
+        this.maxDate = { year: current.getFullYear(), month: current.getMonth() + 3, day: current.getDate() };
     }
 
     onDateSelection(event: any, date: NgbDateStruct) {
 
-        event.target.parentElement.blur();  //make that not appear the outline
+        event.target.parentElement.blur();  //make that not appear the outline        
         if (!this.fromDate && !this.toDate) {
             if (event.ctrlKey == true)  //If is CrtlKey pressed
                 this.fromDate = date;
             else
                 this.addDate(date);
-
+            
             this.datesSelectedChange.emit(this.datesSelected);
 
         } else if (this.fromDate && !this.toDate && after(date, this.fromDate)) {

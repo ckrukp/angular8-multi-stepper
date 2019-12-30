@@ -4,8 +4,10 @@ import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@ang
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { InstagramService } from '../service/instagram.service';
 
-import { Instagram } from "ng2-cordova-oauth/core";  
+import { Instagram } from "ng2-cordova-oauth/core";
 import { OauthBrowser } from 'ng2-cordova-oauth/platform/browser';
+
+import * as jQuery from 'jquery';
 
 @Component({
   selector: 'app-progress',
@@ -30,7 +32,7 @@ export class ProgressComponent implements OnInit {
   fourteenFormGroup: FormGroup;
 
   currentStepRate = 0;
-  currentJobKind = "part";
+  // currentJobKind = "part";
   isSignUpForm = true;
   lastStep = false;
   notPickDate = false;
@@ -40,14 +42,14 @@ export class ProgressComponent implements OnInit {
   datesSelected: NgbDateStruct[] = [];
 
   partTimeDateList = [];
-  fullTimeDateList = [];
+  // fullTimeDateList = [];
 
   private oauth: OauthBrowser = new OauthBrowser();
   private instagramProvider: Instagram = new Instagram({
-      clientId: "f194c426811749f38002d5f19512aa2f",
-      redirectUri: 'http://localhost', 
-      responseType: 'token',
-      appScope: ['basic','public_content']
+    clientId: "f194c426811749f38002d5f19512aa2f",
+    redirectUri: 'http://localhost',
+    responseType: 'token',
+    appScope: ['basic', 'public_content']
   });
 
   constructor(private _formBuilder: FormBuilder, private instaService: InstagramService) { }
@@ -97,29 +99,29 @@ export class ProgressComponent implements OnInit {
   }
 
   instagramConnecting() {
-    this.oauth.logInVia(this.instagramProvider) 
+    this.oauth.logInVia(this.instagramProvider)
       .then((success) => {
 
-          this.instaService.getUserId(success['access_token']).subscribe((res) => {
+        this.instaService.getUserId(success['access_token']).subscribe((res) => {
 
-            this.instaService.getPictures(res['data']['id'], success['access_token'])
+          this.instaService.getPictures(res['data']['id'], success['access_token'])
             .subscribe((insta) => {
               this.instagramConnected = true;
               this.instaPics = insta['data'];
-              
+
               if (this.instaPics.length <= 4)
                 this.displayPics = this.instaPics
               else {
-                for (let i = 0; i < 4; i ++) {
+                for (let i = 0; i < 4; i++) {
                   this.displayPics.push(this.instaPics[i]);
                 }
               }
               console.log("Instagram Media data like this: >>>>>>>>>>>>>>>>>", this.instaPics);
             });
 
-          }, (error) => {
-            console.log('ERROR: ' + error);
-          });
+        }, (error) => {
+          console.log('ERROR: ' + error);
+        });
 
       }).catch((err) => {
         console.log('erro: >>>>' + err);
@@ -142,10 +144,6 @@ export class ProgressComponent implements OnInit {
     this.datesSelected = value;
   }
 
-  changeJobKind(e) {
-    this.currentJobKind = e.value;
-  }
-
   goBack(stepper: MatStepper) {
     if (stepper['_selectedIndex'] == 1) {
       this.isSignUpForm = true;
@@ -164,11 +162,7 @@ export class ProgressComponent implements OnInit {
         this.notPickDate = true;
       } else {
         this.notPickDate = false;
-
-        if (this.currentJobKind == 'part')
-          this.getPartTimeJobDates();
-        else
-          this.getFullTimeJobDates();
+        this.getJobTimeRange();
 
         stepper.next();
       }
@@ -177,50 +171,24 @@ export class ProgressComponent implements OnInit {
     }
   }
 
-  getPartTimeJobDates() {
-    this.partTimeDateList = this.datesSelected;
-    console.log("part time date list is ...", this.partTimeDateList);
-  }
+  getJobTimeRange() {
+    let output = {};
 
-  getFullTimeJobDates() {
-    let resultList = [];
+    this.datesSelected.forEach((row) => {
+      let year = row['year'];
+      let month = row['month'];
+      let day = row['day'];
+    
+      if (!output[year])
+        output[year] = {};
+        if (!output[year][month])
+          output[year][month] = {};
 
-    let selectedTimestampList = [];
+      output[year][month][day] = true;
+      
+    });
 
-    let currentDate = new Date();
-    let date = currentDate.getDate();
-    let month = currentDate.getMonth() + 1;
-    let year = currentDate.getFullYear();
-    let todayTimestamp = Date.parse(year + '-' + month + '-' + date);
-
-    for (let i = 0; i < this.datesSelected.length; i++) {
-      let dateStr = this.datesSelected[i]["year"] + '-' + this.datesSelected[i]["month"] + '-' + this.datesSelected[i]["day"];
-
-      selectedTimestampList.push(Date.parse(dateStr));
-    }
-
-    selectedTimestampList.sort();
-
-    let maxTimestamp = selectedTimestampList[selectedTimestampList.length - 1];
-    let monthLimit = new Date(new Date(maxTimestamp).getFullYear(), new Date(maxTimestamp).getMonth() + 1, 1).getTime();
-
-    for (let i = todayTimestamp; i < monthLimit; i += 86400000) {
-      let typedDate = {
-        "year": new Date(i).getFullYear(),
-        "month": new Date(i).getMonth() + 1,
-        "day": new Date(i).getDate()
-      };
-
-      var findDate = this.datesSelected.find(function (el) {
-        return el['year'] == typedDate['year'] && el['month'] == typedDate['month'] && el['day'] == typedDate['day'];
-      });
-
-      if (!findDate)
-        resultList.push(typedDate);
-    }
-
-    this.fullTimeDateList = resultList;
-    console.log("full time date list is ...", this.fullTimeDateList);
+    console.log("part time date list is ...", output);
   }
 
   addClient() {
@@ -254,5 +222,44 @@ export class ProgressComponent implements OnInit {
     }
   }
 
+  selectAll() {
+    let currentDate = new Date();
+    let date = currentDate.getDate();
+    let month = currentDate.getMonth() + 1;
+    let year = currentDate.getFullYear();
+    let todayTimestamp = Date.parse(year + '-' + month + '-' + date);
 
+    let selectedMonth, selectedYear;
+
+    var selectionEls = jQuery(".custom-select");
+
+    for (var i = 0; i < selectionEls.length; i++) {
+      if (selectionEls[i].title == "Select month")
+        selectedMonth = parseInt(selectionEls[i].value);
+      else if (selectionEls[i].title == "Select year")
+        selectedYear = parseInt(selectionEls[i].value);
+    }
+
+    let startDate = new Date(selectedYear, selectedMonth - 1, 1).getTime();
+    let monthLimit = new Date(selectedYear, selectedMonth, 1).getTime();
+
+    if (year == selectedYear && month == selectedMonth)
+      startDate = todayTimestamp;
+
+    for (let i = startDate; i < monthLimit; i += 86400000) {
+      let typedDate = {
+        "year": new Date(i).getFullYear(),
+        "month": new Date(i).getMonth() + 1,
+        "day": new Date(i).getDate()
+      };
+      let index = this.datesSelected.findIndex(f => f.day == typedDate.day && f.month == typedDate.month && f.year == typedDate.year);
+
+      if (index < 0)
+        this.datesSelected.push(typedDate);
+    }
+  }
+
+  deselect() {
+    this.datesSelected = [];
+  }
 }
