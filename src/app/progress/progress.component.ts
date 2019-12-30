@@ -260,6 +260,38 @@ export class ProgressComponent implements OnInit {
   }
 
   deselect() {
-    this.datesSelected = [];
+    let currentDate = new Date();
+    let date = currentDate.getDate();
+    let month = currentDate.getMonth() + 1;
+    let year = currentDate.getFullYear();
+    let todayTimestamp = Date.parse(year + '-' + month + '-' + date);
+
+    let selectedMonth, selectedYear;
+
+    var selectionEls = jQuery(".custom-select");
+
+    for (var i = 0; i < selectionEls.length; i++) {
+      if (selectionEls[i].title == "Select month")
+        selectedMonth = parseInt(selectionEls[i].value);
+      else if (selectionEls[i].title == "Select year")
+        selectedYear = parseInt(selectionEls[i].value);
+    }
+
+    let startDate = new Date(selectedYear, selectedMonth - 1, 1).getTime();
+    let monthLimit = new Date(selectedYear, selectedMonth, 1).getTime();
+
+    if (year == selectedYear && month == selectedMonth)
+      startDate = todayTimestamp;
+
+    for (let i = startDate; i < monthLimit; i += 86400000) {
+      let typedDate = {
+        "year": new Date(i).getFullYear(),
+        "month": new Date(i).getMonth() + 1,
+        "day": new Date(i).getDate()
+      };
+      this.datesSelected = this.datesSelected.filter(function(el) {
+        return el.day != typedDate.day || el.month != typedDate.month || el.year != typedDate.year
+      });
+    }
   }
 }
